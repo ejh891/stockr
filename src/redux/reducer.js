@@ -2,8 +2,8 @@ import * as ActionTypes from './actionTypes'
 import ImmutabilityUtil from '../utils/ImmutabilityUtil';
 
 const initialState = {
-    stockDataMap: new Map(), // ticker => { date, high, low, open, close }[]
-    fetchStockDataErrorMap: new Map(), // ticker => errorMessage
+    stockDataMap: new Map(), // symbol => { date, high, low, open, close }[]
+    fetchStockDataErrorMap: new Map(), // symbol => errorMessage
 };
 
 export default (state = initialState, action) => {
@@ -11,12 +11,12 @@ export default (state = initialState, action) => {
         case ActionTypes.FETCH_STOCK_DATA_SUCCESS:
             return {
                 ...state,
-                stockDataMap: ImmutabilityUtil.setValueInMap(state.stockDataMap, action.ticker, action.data),
+                stockDataMap: ImmutabilityUtil.setValueInMap(state.stockDataMap, action.symbol, action.data),
             };
         case ActionTypes.FETCH_STOCK_DATA_FAILURE:
             return {
                 ...state,
-                fetchStockDataErrorMap: ImmutabilityUtil.setValueInMap(state.fetchStockDataErrorMap, action.ticker, action.errorMessage),
+                fetchStockDataErrorMap: ImmutabilityUtil.setValueInMap(state.fetchStockDataErrorMap, action.symbol, action.errorMessage),
             };
         default:
             return state;

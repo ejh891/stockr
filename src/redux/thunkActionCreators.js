@@ -1,14 +1,14 @@
 import * as ActionCreators from './actionCreators';
 import StockDetailsService from '../services/StockDetailsService';
 
-export function fetchStockData(ticker) {
+export function fetchStockData(symbol) {
     return async (dispatch) => {
       try {
-        const stockData = await StockDetailsService.getStockDetails(ticker);
+        const stockData = await StockDetailsService.getStockDetails(symbol);
   
-        dispatch(ActionCreators.fetchStockDataSuccess(ticker, stockData));
+        dispatch(ActionCreators.fetchStockDataSuccess(symbol, stockData));
       } catch (error) {
-        dispatch(ActionCreators.fetchStockDataFailure(ticker, error.message));
+        dispatch(ActionCreators.fetchStockDataFailure(symbol, error.message));
       }
     };
   }

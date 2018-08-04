@@ -1,17 +1,17 @@
 import * as ActionTypes from './actionTypes';
 
-export function fetchStockDataSuccess(ticker, data){
+export function fetchStockDataSuccess(symbol, data){
     return {
         type: ActionTypes.FETCH_STOCK_DATA_SUCCESS,
-        ticker,
+        symbol,
         data,
     };
 }
 
-export function fetchStockDataFailure(ticker, errorMessage){
+export function fetchStockDataFailure(symbol, errorMessage){
     return {
         type: ActionTypes.FETCH_STOCK_DATA_FAILURE,
-        ticker,
+        symbol,
         errorMessage,
     };
 }

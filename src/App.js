@@ -10,21 +10,21 @@ class App extends Component {
         super(props);
 
         this.state = {
-            ticker: '',
+            symbol: '',
         };
 
-        this.tickerOnChange = this.tickerOnChange.bind(this);
+        this.symbolOnChange = this.symbolOnChange.bind(this);
         this.fetchStockData = this.fetchStockData.bind(this);
     }
 
-    tickerOnChange(event) {
+    symbolOnChange(event) {
         this.setState({
-            ticker: event.target.value,
+            symbol: event.target.value,
         });
     }
 
     fetchStockData() {
-        this.props.asyncActions.fetchStockData(this.state.ticker);
+        this.props.asyncActions.fetchStockData(this.state.symbol);
     }
 
     render() {
@@ -32,8 +32,8 @@ class App extends Component {
             <div>
                 <input
                     type="text"
-                    value={this.state.ticker}
-                    onChange={this.tickerOnChange}
+                    value={this.state.symbol}
+                    onChange={this.symbolOnChange}
                 />
                 <button
                     type="button"
@@ -41,7 +41,7 @@ class App extends Component {
                 >
                     Fetch
                 </button>
-                {this.props.stockDataMap.get(this.state.ticker) ? <Graph data={this.props.stockDataMap.get(this.state.ticker)} /> : null}
+                {this.props.stockDataMap.get(this.state.symbol) ? <Graph data={this.props.stockDataMap.get(this.state.symbol)} /> : null}
             </div>
         );
     }
@@ -49,7 +49,7 @@ class App extends Component {
 
 const mapStateToProps = state => {
     return {
-        selectedTicker: state.selectedTicker,
+        selectedsymbol: state.selectedsymbol,
         stockDataMap: state.stockDataMap,
         fetchStockDataErrorMap: state.fetchStockDataErrorMap,
     }
