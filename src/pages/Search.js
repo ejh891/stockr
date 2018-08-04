@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
-import * as asyncActionCreators from './redux/thunkActionCreators';
-import Graph from './components/Graph';
-
-class App extends Component {
+class Search extends Component {
     constructor(props) {
         super(props);
 
@@ -14,7 +10,7 @@ class App extends Component {
         };
 
         this.symbolOnChange = this.symbolOnChange.bind(this);
-        this.fetchStockData = this.fetchStockData.bind(this);
+        this.searchOnClick = this.searchOnClick.bind(this);
     }
 
     symbolOnChange(event) {
@@ -23,8 +19,8 @@ class App extends Component {
         });
     }
 
-    fetchStockData() {
-        this.props.asyncActions.fetchStockData(this.state.symbol);
+    searchOnClick() {
+        this.props.history.push(`/symbol/${this.state.symbol}`);
     }
 
     render() {
@@ -37,11 +33,10 @@ class App extends Component {
                 />
                 <button
                     type="button"
-                    onClick={this.fetchStockData}
+                    onClick={this.searchOnClick}
                 >
-                    Fetch
+                    Search
                 </button>
-                {this.props.stockDataMap.get(this.state.symbol) ? <Graph data={this.props.stockDataMap.get(this.state.symbol)} /> : null}
             </div>
         );
     }
@@ -49,16 +44,12 @@ class App extends Component {
 
 const mapStateToProps = state => {
     return {
-        selectedsymbol: state.selectedsymbol,
-        stockDataMap: state.stockDataMap,
-        fetchStockDataErrorMap: state.fetchStockDataErrorMap,
     }
   }
   
   const mapDispatchToProps = dispatch => {
     return {
-      asyncActions: bindActionCreators(asyncActionCreators, dispatch),
     }
   }
   
-  export default connect(mapStateToProps, mapDispatchToProps)(App);
+  export default connect(mapStateToProps, mapDispatchToProps)(Search);
