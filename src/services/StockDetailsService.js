@@ -23,4 +23,10 @@ export default class StockDetailsService {
     static async getStockDetails(symbol) {
         return await iex.stockChart(symbol, '6m');
     }
+
+    static async getAvailableSymbols() {
+        const symbolData = await iex.symbols();
+
+        return symbolData.filter(datum => datum.isEnabled);
+    }
 }

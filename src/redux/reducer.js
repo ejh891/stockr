@@ -4,6 +4,8 @@ import ImmutabilityUtil from '../utils/ImmutabilityUtil';
 const initialState = {
     stockDataMap: new Map(), // symbol => { date, high, low, open, close }[]
     fetchStockDataErrorMap: new Map(), // symbol => errorMessage
+    availableSymbols: [],
+    fetchAvailableSymbolsError: null,
 };
 
 export default (state = initialState, action) => {
@@ -17,6 +19,16 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 fetchStockDataErrorMap: ImmutabilityUtil.setValueInMap(state.fetchStockDataErrorMap, action.symbol, action.errorMessage),
+            };
+        case ActionTypes.FETCH_AVAILABLE_SYMBOLS_SUCCESS:
+            return {
+                ...state,
+                availableSymbols: action.symbols,
+            };
+        case ActionTypes.FETCH_AVAILABLE_SYMBOLS_FAILURE:
+            return {
+                ...state,
+                fetchAvailableSymbolsError: action.errorMessage,
             };
         default:
             return state;

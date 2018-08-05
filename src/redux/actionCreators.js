@@ -15,3 +15,17 @@ export function fetchStockDataFailure(symbol, errorMessage){
         errorMessage,
     };
 }
+
+export function fetchAvailableSymbolsSuccess(symbols){
+    return {
+        type: ActionTypes.FETCH_AVAILABLE_SYMBOLS_SUCCESS,
+        symbols,
+    };
+}
+
+export function fetchAvailableSymbolsFailure(errorMessage){
+    return {
+        type: ActionTypes.FETCH_AVAILABLE_SYMBOLS_FAILURE,
+        errorMessage,
+    };
+}

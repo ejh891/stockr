@@ -14,7 +14,6 @@ export default function Graph(props) {
         data,
     } = props;
 
-    console.log(data);
     const formattedData = data.map(datum => ({ name: datum.date, close: datum.close, open: datum.open, high: datum.high, low: datum.low }));
 
     return (

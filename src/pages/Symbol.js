@@ -63,7 +63,13 @@ class Symbol extends Component {
 
         return (
             <div>
-                <div>{symbol}</div>
+                <div
+                    style={{
+                        textTransform: 'uppercase',
+                    }}
+                >
+                    {symbol}
+                </div>
                 <Graph data={stockData} />
             </div>
         );
