@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import 'typeface-roboto';
 
 import Router from './Router';
 import getStore from './redux/store';
@@ -11,7 +12,9 @@ import './polyfills';
 
 const muiTheme = createMuiTheme({
     palette: {
-        primary: '#38454f',
+        primary: {
+            main: '#38454f',
+        },
     },
 });
 
