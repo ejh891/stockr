@@ -79,8 +79,8 @@ class Symbol extends Component {
 
 const mapStateToProps = state => {
     return {
-        stockDataMap: state.stockDataMap,
-        fetchStockDataErrorMap: state.fetchStockDataErrorMap,
+        stockDataMap: state.main.stockDataMap,
+        fetchStockDataErrorMap: state.main.fetchStockDataErrorMap,
     }
 }
 

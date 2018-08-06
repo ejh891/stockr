@@ -27,6 +27,9 @@ export default class StockDetailsService {
     static async getAvailableSymbols() {
         const symbolData = await iex.symbols();
 
-        return symbolData.filter(datum => datum.isEnabled);
+        return symbolData.map(datum => ({
+            ...datum,
+            id: datum.symbol, // add an id prop to each result (necessry for searching)
+        }));
     }
 }
