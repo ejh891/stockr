@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import DatePicker from 'material-ui-pickers/DatePicker';
+import moment from 'moment';
 
 import Graph from '../components/Graph';
 
@@ -65,8 +66,8 @@ class Symbol extends Component {
             const stockData = stockDataMap.get(symbol);
 
             this.setState({
-                startDate: new Date(stockData[0].date),
-                endDate: new Date(stockData[stockData.length - 1].date),
+                startDate: moment(stockData[0].date),
+                endDate: moment(stockData[stockData.length - 1].date),
             });
         }
     }
@@ -132,11 +133,11 @@ class Symbol extends Component {
             );
         }
 
-        const minDate = new Date(stockData[0].date);
-        const maxDate = new Date(stockData[stockData.length - 1].date);
+        const minDate = moment(stockData[0].date);
+        const maxDate = moment(stockData[stockData.length - 1].date);
 
         const trimmedData = stockData.filter(datum => {
-            const datumDate = new Date(datum.date);
+            const datumDate = moment(datum.date);
 
             return datumDate >= startDate && datumDate <= endDate;
         });
@@ -192,10 +193,10 @@ class Symbol extends Component {
                         marginTop: 20,
                     }}
                 >
-                    <span>Change over this period:</span>
+                    <span>{`Change over ${moment.duration(endDate - startDate).humanize()} :`}</span>
                     <span
                         style={{
-                            marginLeft: 4,
+                            marginLeft: 8,
                             color: percentChange > 0 ? 'green' : 'red',
                         }}
                     >
