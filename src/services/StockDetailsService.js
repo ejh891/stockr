@@ -20,8 +20,8 @@ export default class StockDetailsService {
     //     return responseJSON.history;
     // }
 
-    static async getStockDetails(symbol) {
-        return await iex.stockChart(symbol, '6m');
+    static async getStockDetails(symbol, timePeriod = '6m') {
+        return await iex.stockChart(symbol, timePeriod);
     }
 
     static async getAvailableSymbols() {
