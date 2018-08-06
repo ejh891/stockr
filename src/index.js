@@ -13,7 +13,7 @@ import './polyfills';
 const muiTheme = createMuiTheme({
     palette: {
         primary: {
-            main: '#38454f',
+            main: '#0099fe',
         },
     },
 });

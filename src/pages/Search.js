@@ -3,9 +3,14 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { createSearchAction } from 'redux-search'
 import debounce from 'lodash.debounce';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
 import TextField from '@material-ui/core/TextField';
-import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Typography from '@material-ui/core/Typography';
+import VisibilitySensor from 'react-visibility-sensor';
 
 import * as asyncActionCreators from '../redux/thunkActionCreators';
 
@@ -15,16 +20,17 @@ class Search extends Component {
 
         this.state = {
             query: '',
+            queuedSearchQuery: '',
+            searchQueued: false,
             selectedSymbol: '',
-            menuOpen: false,
+            resultsToShow: 20,
         };
 
         this.searchForSymbols = debounce(this.searchForSymbols.bind(this), 400);
-        this.symbolSearchOnFocus = this.symbolSearchOnFocus.bind(this);
-        this.symbolSearchOnBlur = this.symbolSearchOnBlur.bind(this);
         this.symbolSearchOnChange = this.symbolSearchOnChange.bind(this);
-        this.onSearchResults = this.onSearchResults.bind(this);
         this.symbolOnSelected = this.symbolOnSelected.bind(this);
+        this.loadMoreVisibilityOnChange = this.loadMoreVisibilityOnChange.bind(this);
+        this.showMoreResults = this.showMoreResults.bind(this);
     }
 
     componentDidMount() {
@@ -38,6 +44,40 @@ class Search extends Component {
         }
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        // if a search just finished
+        if (prevProps.search.isSearching && !this.props.search.isSearching) {
+            // if that search is for the current query; show it, otherwise a new search is queued
+            if (this.props.search.text === this.state.query) {
+                this.setState({
+                    searchQueued: false,
+                    resultsToShow: 20,
+                });
+            }
+        }
+    }
+
+    showMoreResults() {
+        if (this.state.resultsToShow < this.props.search.result.length) {
+            this.setState(prevState => ({
+                resultsToShow: prevState.resultsToShow + 20,
+            }));
+        }
+
+        // keep loading more results, until we cancel the timer (when the bottom of the list is out of view)
+        this.loadMoreTimer = setTimeout(this.showMoreResults, 1000);
+    }
+
+    loadMoreVisibilityOnChange(isVisible) {
+        if (isVisible) {
+            this.showMoreResults();
+        } else {
+            clearTimeout(this.loadMoreTimer);
+        }
+
+
+    }
+
     symbolOnSelected(symbol) {
         this.setState({
             selectedSymbol: symbol,
@@ -46,28 +86,8 @@ class Search extends Component {
         });
     }
 
-    searchForSymbols(text) {
-        this.props.asyncActions.searchSymbols(text);
-    }
-
-    onSearchResults(event) {
-        const {
-            results,
-        } = event.data;
-
-        this.setState({
-            results,
-        });
-    }
-
-    symbolSearchOnBlur(event) {
-        this.setState({ menuOpen: false });
-    }
-
-    symbolSearchOnFocus(event) {
-        this.setState({
-            menuOpen: true,
-        });
+    async searchForSymbols(query) {
+        this.props.asyncActions.searchSymbols(query);
     }
 
     symbolSearchOnChange(event) {
@@ -76,6 +96,7 @@ class Search extends Component {
         if (this.state.query !== query) {
             this.setState({
                 query: query,
+                searchQueued: true,
             });
 
             this.searchForSymbols(query);
@@ -97,12 +118,31 @@ class Search extends Component {
 
         if (availableSymbolMap.size === 0) {
             return (
-                <div>Loading symbols...</div>
+                <div
+                    style={{
+                        width: '100vw',
+                        height: '100vh',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}
+                >
+                    <CircularProgress />
+                    <Typography>Loading symbols...</Typography>
+                </div>
             );
         }
 
+        const resultsPending = search.isSearching || this.state.searchQueued;
+
         return (
             <div>
+                <AppBar position="static">
+                    <Toolbar>
+                        <Typography variant="title" color="inherit">Stockr</Typography>
+                    </Toolbar>
+                </AppBar>
                 <TextField
                     onFocus={this.symbolSearchOnFocus}
                     onBlur={this.symbolSearchOnBlur}
@@ -113,28 +153,43 @@ class Search extends Component {
                     margin="normal"
                     fullWidth={true}
                 />
-                    {search.isSearching &&
-                        <div>Searching...</div>
-                    }
-                    {!search.isSearching && search.result.length === 0 && this.state.query !== '' &&
-                        <div>No results...</div>
-                    }
-                    {!search.isSearching && this.state.query === '' &&
-                        <div>Start typing to search by symbol or full name</div>
-                    }
-                    {!search.isSearching && this.state.query !== '' && search.result.slice(0, 20).map(symbol => {
-                        const symbolData = availableSymbolMap.get(symbol)
-                        return (
-                            <MenuItem
-                                key={symbol}
-                                selected={symbol === this.state.selectedSymbol}
-                                onClick={() => this.symbolOnSelected(symbol)}
-                            >
-                                {`${symbolData.symbol} - ${symbolData.name}`}
-                            </MenuItem>
-                        );
-                    })}
-            </div>
+                {resultsPending &&
+                    <div style={{ margin: 20 }}>
+                        <LinearProgress variant="query" />
+                    </div>
+                }
+                {!resultsPending && this.state.query !== '' && search.result.length === 0 &&
+                    <Typography>No results...</Typography>
+                }
+                {!resultsPending && this.state.query === '' &&
+                    <Typography>Start typing to search by symbol or full name</Typography>
+                }
+                {!resultsPending && this.state.query !== '' && search.result.slice(0, this.state.resultsToShow).map(symbol => {
+                    const symbolData = availableSymbolMap.get(symbol)
+                    return (
+                        <MenuItem
+                            key={symbol}
+                            selected={symbol === this.state.selectedSymbol}
+                            onClick={() => this.symbolOnSelected(symbol)}
+                        >
+                            {`${symbolData.symbol} - ${symbolData.name}`}
+                        </MenuItem>
+                    );
+                })}
+                {!resultsPending && this.state.query !== '' && this.state.resultsToShow < search.result.length &&
+                    <VisibilitySensor onChange={this.loadMoreVisibilityOnChange}>
+                        <div
+                            style={{
+                                width: '100%',
+                                display: 'flex',
+                                justifyContent: 'center',
+                            }}
+                        >
+                            <CircularProgress />
+                        </div>
+                    </VisibilitySensor>
+                }
+             </div>
         );
     }
 }

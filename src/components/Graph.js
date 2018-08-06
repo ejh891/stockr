@@ -7,6 +7,7 @@ import {
     Legend,
     Line,
     Tooltip,
+    ResponsiveContainer,
 } from 'recharts';
 
 export default function Graph(props) {
@@ -14,20 +15,36 @@ export default function Graph(props) {
         data,
     } = props;
 
-    const formattedData = data.map(datum => ({ name: datum.date, close: datum.close, open: datum.open, high: datum.high, low: datum.low }));
+    const formattedData = data.map(datum => ({
+        name: datum.label,
+        close: datum.close,
+        open: datum.open,
+        high: datum.high,
+        low: datum.low
+    }));
 
     return (
-        <LineChart width={730} height={250} data={formattedData}
-            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Line type="monotone" dataKey="open" stroke="#8884d8" />
-            <Line type="monotone" dataKey="close" stroke="#82ca9d" />
-            <Line type="monotone" dataKey="high" stroke="#00ff00" />
-            <Line type="monotone" dataKey="low" stroke="#ff0000" />
-        </LineChart>
+        <div
+            style={{
+                marginTop: 40,
+                height: '40vh',
+                maxHeight: 400,
+            }}
+        >
+            <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={formattedData}
+                    margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Line type="monotone" dataKey="open" stroke="#8884d8" />
+                    <Line type="monotone" dataKey="close" stroke="#82ca9d" />
+                    <Line type="monotone" dataKey="high" stroke="#00ff00" />
+                    <Line type="monotone" dataKey="low" stroke="#ff0000" />
+                </LineChart>
+            </ResponsiveContainer>
+        </div>
     );
 }
