@@ -10,13 +10,15 @@ import {
     ResponsiveContainer,
 } from 'recharts';
 
+import { fontFamily } from '../settings/theme';
+
 export default function Graph(props) {
     const {
         data,
     } = props;
 
     const formattedData = data.map(datum => ({
-        name: datum.label,
+        label: datum.label.split(',')[0], // removes the year
         close: datum.close,
         open: datum.open,
         high: datum.high,
@@ -35,10 +37,14 @@ export default function Graph(props) {
                 <LineChart data={formattedData}
                     margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
+                    <XAxis
+                        dataKey="label"
+                    />
+                    <YAxis domain={['dataMin', 'dataMax']} />
+                    <Tooltip
+                    />
+                    <Legend
+                    />
                     <Line type="monotone" dataKey="open" stroke="#8884d8" />
                     <Line type="monotone" dataKey="close" stroke="#82ca9d" />
                     <Line type="monotone" dataKey="high" stroke="#00ff00" />

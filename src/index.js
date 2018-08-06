@@ -9,6 +9,7 @@ import getStore from './redux/store';
 import registerServiceWorker from './registerServiceWorker';
 
 import './polyfills';
+import './index.css';
 
 const muiTheme = createMuiTheme({
     palette: {
