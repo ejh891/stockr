@@ -6,13 +6,16 @@ import debounce from 'lodash.debounce';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import TextField from '@material-ui/core/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import MenuItem from '@material-ui/core/MenuItem';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
+import SearchIcon from '@material-ui/icons/Search';
 import VisibilitySensor from 'react-visibility-sensor';
 
 import * as asyncActionCreators from '../redux/thunkActionCreators';
+import HighlightedText from '../components/HighlightedText';
 
 class Search extends Component {
     constructor(props) {
@@ -152,6 +155,13 @@ class Search extends Component {
                     onChange={this.symbolSearchOnChange}
                     margin="normal"
                     fullWidth={true}
+                    InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <SearchIcon />
+                          </InputAdornment>
+                        ),
+                      }}
                 />
                 {resultsPending &&
                     <div style={{ margin: 20 }}>
@@ -172,7 +182,10 @@ class Search extends Component {
                             selected={symbol === this.state.selectedSymbol}
                             onClick={() => this.symbolOnSelected(symbol)}
                         >
-                            {`${symbolData.symbol} - ${symbolData.name}`}
+                            <HighlightedText
+                                text={`${symbolData.symbol} - ${symbolData.name}`}
+                                highlightedSubString={this.state.query}
+                            />
                         </MenuItem>
                     );
                 })}

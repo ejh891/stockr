@@ -5,6 +5,7 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import 'typeface-roboto';
 
 import Router from './Router';
+import { colors } from './settings/theme';
 import getStore from './redux/store';
 import registerServiceWorker from './registerServiceWorker';
 
@@ -14,7 +15,7 @@ import './index.css';
 const muiTheme = createMuiTheme({
     palette: {
         primary: {
-            main: '#0099fe',
+            main: colors.primary,
         },
     },
 });
