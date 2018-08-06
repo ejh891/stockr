@@ -17,6 +17,9 @@ export default function Graph(props) {
         data,
     } = props;
 
+    const maxPrice = data.reduce((maxPrice, datum) => Math.max(maxPrice, datum.close), 0);
+    const yAxisCap = parseInt((maxPrice * 1.05).toFixed(0), 10);
+
     const formattedData = data.map(datum => ({
         label: datum.label,
         close: datum.close,
@@ -40,7 +43,7 @@ export default function Graph(props) {
                     <XAxis
                         dataKey="label"
                     />
-                    <YAxis domain={[0, 'dataMax']} />
+                    <YAxis domain={[0, yAxisCap]} />
                     <Tooltip />
                     <Legend />
                     <Line
