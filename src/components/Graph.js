@@ -10,13 +10,15 @@ import {
     ResponsiveContainer,
 } from 'recharts';
 
+import { colors } from '../settings/theme';
+
 export default function Graph(props) {
     const {
         data,
     } = props;
 
     const formattedData = data.map(datum => ({
-        label: datum.label.split(',')[0], // removes the year
+        label: datum.label,
         close: datum.close,
         open: datum.open,
         high: datum.high,
@@ -38,15 +40,10 @@ export default function Graph(props) {
                     <XAxis
                         dataKey="label"
                     />
-                    <YAxis domain={['dataMin', 'dataMax']} />
-                    <Tooltip
-                    />
-                    <Legend
-                    />
-                    <Line type="monotone" dataKey="open" stroke="#8884d8" />
-                    <Line type="monotone" dataKey="close" stroke="#82ca9d" />
-                    <Line type="monotone" dataKey="high" stroke="#00ff00" />
-                    <Line type="monotone" dataKey="low" stroke="#ff0000" />
+                    <YAxis domain={[0, 'dataMax']} />
+                    <Tooltip />
+                    <Legend />
+                    <Line type="monotone" dataKey="close" stroke={colors.primary} />
                 </LineChart>
             </ResponsiveContainer>
         </div>
