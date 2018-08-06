@@ -10,8 +10,6 @@ import {
     ResponsiveContainer,
 } from 'recharts';
 
-import { fontFamily } from '../settings/theme';
-
 export default function Graph(props) {
     const {
         data,
