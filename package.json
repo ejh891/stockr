@@ -5,8 +5,11 @@
   "dependencies": {
     "@material-ui/core": "^1.4.3",
     "@material-ui/icons": "^2.0.1",
+    "classnames": "^2.2.6",
     "lodash.debounce": "^4.0.8",
     "map.prototype.tojson": "^0.1.3",
+    "material-ui-pickers": "^1.0.0-rc.12",
+    "moment": "^2.22.2",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-redux": "^5.0.7",

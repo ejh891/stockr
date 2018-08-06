@@ -16,7 +16,7 @@ export default class StockDetailsService {
     //     return responseJSON.history;
     // }
 
-    static async getStockDetails(symbol, timePeriod = '1m') {
+    static async getStockDetails(symbol, timePeriod = '5y') {
         const response = await fetch(`https://api.iextrading.com/1.0/stock/${symbol}/chart/${timePeriod}`, {
             method: 'GET',
             headers: {

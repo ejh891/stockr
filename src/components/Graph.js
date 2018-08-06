@@ -43,7 +43,15 @@ export default function Graph(props) {
                     <YAxis domain={[0, 'dataMax']} />
                     <Tooltip />
                     <Legend />
-                    <Line type="monotone" dataKey="close" stroke={colors.primary} />
+                    <Line
+                        type="monotone" dataKey="close" stroke={colors.primary}
+                        dot={{
+                            onClick: () => console.log(arguments),
+                        }}
+                        activeDot={{
+                            onClick: () => console.log(arguments),
+                        }}
+                    />
                 </LineChart>
             </ResponsiveContainer>
         </div>

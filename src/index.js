@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider';
+import MomentUtils from 'material-ui-pickers/utils/moment-utils';
 import 'typeface-roboto';
 
 import Router from './Router';
@@ -22,9 +24,11 @@ const muiTheme = createMuiTheme({
 
 ReactDOM.render(
     <MuiThemeProvider theme={muiTheme}>
-        <Provider store={getStore()}>
-            <Router />
-        </Provider>
+        <MuiPickersUtilsProvider utils={MomentUtils}>
+            <Provider store={getStore()}>
+                <Router />
+            </Provider>
+        </MuiPickersUtilsProvider>
     </MuiThemeProvider>,
     document.getElementById('root')
 );
