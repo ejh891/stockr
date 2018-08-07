@@ -6041,6 +6041,13 @@ react-event-listener@^0.6.1, react-event-listener@^0.6.2:
     prop-types "^15.6.0"
     warning "^4.0.1"
 
+react-grid-system@^4.1.4:
+  version "4.1.4"
+  resolved "https://registry.yarnpkg.com/react-grid-system/-/react-grid-system-4.1.4.tgz#cf363f1780775e570cbd2552e0a0b440065c2457"
+  dependencies:
+    lodash "^4.17.10"
+    prop-types "^15.6.1"
+
 react-input-autosize@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/react-input-autosize/-/react-input-autosize-2.2.1.tgz#ec428fa15b1592994fb5f9aa15bb1eb6baf420f8"
