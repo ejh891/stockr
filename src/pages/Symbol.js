@@ -8,7 +8,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import SearchIcon from '@material-ui/icons/Search';
 import DatePicker from 'material-ui-pickers/DatePicker';
 import moment from 'moment';
 
@@ -155,7 +155,7 @@ class Symbol extends Component {
                             onClick={() => this.props.history.push('/')}
                             color="inherit"
                         >
-                            <ArrowBackIcon />
+                            <SearchIcon />
                         </IconButton>
                         <Typography variant="title" color="inherit">{symbol}</Typography>
                     </Toolbar>
@@ -183,7 +183,7 @@ class Symbol extends Component {
                         minDate={startDate}
                         maxDate={maxDate}
                         label="End date"
-                        value={this.state.endDate || new Date(stockData[stockData.length - 1].date)}
+                        value={this.state.endDate}
                         onChange={this.endDateOnChange}
                     />
                 </div>
