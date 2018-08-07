@@ -9,13 +9,14 @@ export default function HighlightedText(props) {
         highlightedSubString,
     } = props;
 
-    const highlightStartIndex = text.toLowerCase().indexOf(highlightedSubString.toLowerCase());
+    const trimmedHighlightedSubString = highlightedSubString.trim();
+    const highlightStartIndex = text.toLowerCase().indexOf(trimmedHighlightedSubString.toLowerCase());
 
     if (highlightStartIndex === -1) {
         throw new Error(`Substring ${highlightedSubString} does not exist in ${text}`);
     }
 
-    const highlightEndIndex = highlightStartIndex + highlightedSubString.length;
+    const highlightEndIndex = highlightStartIndex + trimmedHighlightedSubString.length;
 
     const beforeHighlight = text.slice(0, highlightStartIndex);
     const highlight = text.slice(highlightStartIndex, highlightEndIndex);
