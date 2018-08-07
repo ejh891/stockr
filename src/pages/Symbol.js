@@ -149,6 +149,7 @@ class Symbol extends Component {
             );
         }
 
+        // data exists between these dates
         const minDate = moment(stockData[0].date);
         const maxDate = moment(stockData[stockData.length - 1].date);
 
@@ -158,10 +159,18 @@ class Symbol extends Component {
             return datumDate >= startDate && datumDate <= endDate;
         });
 
+        // data window currently being viewed
+        const dataStartDate = moment(trimmedData[0].date);
+        const dataEndDate = moment(trimmedData[trimmedData.length - 1].date);
+
         const startPrice = trimmedData[0].close;
         const endPrice = trimmedData[trimmedData.length - 1].close;
 
-        const percentChange = (((endPrice - startPrice) / (endPrice + startPrice)) * 100).toFixed(2);
+        const percentChange = (((endPrice - startPrice) / startPrice) * 100).toFixed(2);
+
+        const duration = dataEndDate.diff(dataStartDate, 'days');
+
+        const yearOverYearChange = ((Math.pow(endPrice / startPrice, 365 / duration) - 1) * 100).toFixed(2);
 
         return (
             <div>
@@ -303,6 +312,45 @@ class Symbol extends Component {
                                     }}
                                 >
                                     {`${percentChange > 0 ? '+' : ''}${percentChange}%`}
+                                </Typography>
+                            </div>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col xs={8} sm={5} md={4} lg={3}>
+                            <div
+                                style={{
+                                    marginTop: 20,
+
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                <Typography
+                                    style={{
+                                        fontSize: '1.1em',
+                                    }}
+                                >
+                                    {'Year over year change:'}
+                                </Typography>
+                            </div>
+                        </Col>
+                        <Col xs={4} sm={3} md={2} lg={1}>
+                            <div
+                                style={{
+                                    marginTop: 20,
+
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                <Typography
+                                    style={{
+                                        color: yearOverYearChange > 0 ? 'green' : 'red',
+                                        fontSize: '1.1em',
+                                    }}
+                                >
+                                    {`${yearOverYearChange > 0 ? '+' : ''}${yearOverYearChange}%`}
                                 </Typography>
                             </div>
                         </Col>
