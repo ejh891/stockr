@@ -24,10 +24,13 @@ class Symbol extends Component {
         this.state = {
             startDate: new Date('1970-01-01'),
             endDate: new Date(),
+            chartHovered: false,
         };
 
         this.startDateOnChange = this.startDateOnChange.bind(this);
         this.endDateOnChange = this.endDateOnChange.bind(this);
+        this.chartOnMouseEnter = this.chartOnMouseEnter.bind(this);
+        this.chartOnMouseLeave = this.chartOnMouseLeave.bind(this);
     }
 
     componentDidMount() {
@@ -71,6 +74,18 @@ class Symbol extends Component {
                 endDate: moment(stockData[stockData.length - 1].date),
             });
         }
+    }
+
+    chartOnMouseEnter() {
+        this.setState({
+            chartHovered: true,
+        });
+    }
+
+    chartOnMouseLeave() {
+        this.setState({
+            chartHovered: false,
+        });
     }
 
     startDateOnChange(startDate) {
@@ -163,7 +178,9 @@ class Symbol extends Component {
                 </AppBar>
                 <Row>
                     <Col xs={12}>
-                        <Graph data={trimmedData} />
+                        <Graph
+                            data={trimmedData}
+                        />
                     </Col>
                 </Row>
                 <Row>

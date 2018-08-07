@@ -15,6 +15,7 @@ import { colors } from '../settings/theme';
 export default function Graph(props) {
     const {
         data,
+        showDots = false,
     } = props;
 
     const maxPrice = data.reduce((maxPrice, datum) => Math.max(maxPrice, datum.close), 0);
@@ -37,8 +38,9 @@ export default function Graph(props) {
             }}
         >
             <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={formattedData}
-                    margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                <LineChart
+                    data={formattedData}
+                >
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis
                         dataKey="label"
@@ -48,12 +50,7 @@ export default function Graph(props) {
                     <Legend />
                     <Line
                         type="monotone" dataKey="close" stroke={colors.primary}
-                        dot={{
-                            onClick: () => console.log(arguments),
-                        }}
-                        activeDot={{
-                            onClick: () => console.log(arguments),
-                        }}
+                        dot={showDots}
                     />
                 </LineChart>
             </ResponsiveContainer>
