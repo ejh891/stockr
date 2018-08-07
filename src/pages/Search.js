@@ -13,9 +13,10 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 import SearchIcon from '@material-ui/icons/Search';
 import VisibilitySensor from 'react-visibility-sensor';
+import Highlighter from 'react-highlight-words';
 
 import * as asyncActionCreators from '../redux/thunkActionCreators';
-import HighlightedText from '../components/HighlightedText';
+import { colors } from '../settings/theme';
 
 class Search extends Component {
     constructor(props) {
@@ -182,9 +183,14 @@ class Search extends Component {
                             selected={symbol === this.state.selectedSymbol}
                             onClick={() => this.symbolOnSelected(symbol)}
                         >
-                            <HighlightedText
-                                text={`${symbolData.symbol} - ${symbolData.name}`}
-                                highlightedSubString={this.state.query}
+                            <Highlighter
+                                textToHighlight={`${symbolData.symbol} - ${symbolData.name}`}
+                                searchWords={this.state.query.split(' ')}
+                                highlightStyle={{
+                                    backgroundColor: 'unset', // remove default highlight
+                                    fontWeight: 'bold',
+                                    color: colors.primary,
+                                }}
                             />
                         </MenuItem>
                     );
