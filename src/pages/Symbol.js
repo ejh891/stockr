@@ -164,7 +164,7 @@ class Symbol extends Component {
         const percentChange = (((endPrice - startPrice) / (endPrice + startPrice)) * 100).toFixed(2);
 
         return (
-            <Container fluid={true}>
+            <div>
                 <AppBar position="static">
                     <Toolbar>
                         <IconButton
@@ -176,137 +176,139 @@ class Symbol extends Component {
                         <Typography variant="title" color="inherit">{symbol}</Typography>
                     </Toolbar>
                 </AppBar>
-                <Row>
-                    <Col xs={12}>
-                        <Graph
-                            data={trimmedData}
-                        />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs={8} sm={5} md={4} lg={3}>
-                        <div
-                            style={{
-                                marginTop: 20,
-
-                                height: '100%',
-                                display: 'flex',
-                                alignItems: 'center',
-                            }}
-                        >
-                            <DatePicker
-                                autoOk={true}
-                                format="YYYY/MM/DD"
-                                label="Start date"
-                                minDate={minDate}
-                                maxDate={endDate}
-                                value={this.state.startDate}
-                                onChange={this.startDateOnChange}
+                <Container fluid={true}>
+                    <Row>
+                        <Col xs={12}>
+                            <Graph
+                                data={trimmedData}
                             />
-                        </div>
-                    </Col>
-                    <Col xs={4} sm={3} md={2} lg={1}>
-                        <div
-                            style={{
-                                marginTop: 20,
-
-                                height: '100%',
-                                display: 'flex',
-                                alignItems: 'center',
-                            }}
-                        >
-                            <Typography
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col xs={8} sm={5} md={4} lg={3}>
+                            <div
                                 style={{
-                                    fontSize: '1.1em',
+                                    marginTop: 20,
+
+                                    height: '100%',
+                                    display: 'flex',
+                                    alignItems: 'center',
                                 }}
                             >
-                                {`$${startPrice}`}
-                            </Typography>
-                        </div>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs={8} sm={5} md={4} lg={3}>
-                        <div
-                            style={{
-                                marginTop: 20,
-
-                                height: '100%',
-                                display: 'flex',
-                                alignItems: 'center',
-                            }}
-                        >
-                            <DatePicker
-                                autoOk={true}
-                                format="YYYY/MM/DD"
-                                minDate={startDate}
-                                maxDate={maxDate}
-                                label="End date"
-                                value={this.state.endDate}
-                                onChange={this.endDateOnChange}
-                            />
-                        </div>
-                    </Col>
-                    <Col xs={4} sm={3} md={2} lg={1}>
-                        <div
-                            style={{
-                                marginTop: 20,
-
-                                height: '100%',
-                                display: 'flex',
-                                alignItems: 'center',
-                            }}
-                        >
-                            <Typography
+                                <DatePicker
+                                    autoOk={true}
+                                    format="YYYY/MM/DD"
+                                    label="Start date"
+                                    minDate={minDate}
+                                    maxDate={endDate}
+                                    value={this.state.startDate}
+                                    onChange={this.startDateOnChange}
+                                />
+                            </div>
+                        </Col>
+                        <Col xs={4} sm={3} md={2} lg={1}>
+                            <div
                                 style={{
-                                    fontSize: '1.1em',
+                                    marginTop: 20,
+
+                                    height: '100%',
+                                    display: 'flex',
+                                    alignItems: 'center',
                                 }}
                             >
-                                {`$${endPrice}`}
-                            </Typography>
-                        </div>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs={8} sm={5} md={4} lg={3}>
-                        <div
-                            style={{
-                                marginTop: 20,
-
-                                display: 'flex',
-                                alignItems: 'center',
-                            }}
-                        >
-                            <Typography
+                                <Typography
+                                    style={{
+                                        fontSize: '1.1em',
+                                    }}
+                                >
+                                    {`$${startPrice}`}
+                                </Typography>
+                            </div>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col xs={8} sm={5} md={4} lg={3}>
+                            <div
                                 style={{
-                                    fontSize: '1.1em',
+                                    marginTop: 20,
+
+                                    height: '100%',
+                                    display: 'flex',
+                                    alignItems: 'center',
                                 }}
                             >
-                                {`Change over ${moment.duration(endDate - startDate).humanize()}:`}
-                            </Typography>
-                        </div>
-                    </Col>
-                    <Col xs={4} sm={3} md={2} lg={1}>
-                        <div
-                            style={{
-                                marginTop: 20,
-
-                                display: 'flex',
-                                alignItems: 'center',
-                            }}
-                        >
-                            <Typography
+                                <DatePicker
+                                    autoOk={true}
+                                    format="YYYY/MM/DD"
+                                    minDate={startDate}
+                                    maxDate={maxDate}
+                                    label="End date"
+                                    value={this.state.endDate}
+                                    onChange={this.endDateOnChange}
+                                />
+                            </div>
+                        </Col>
+                        <Col xs={4} sm={3} md={2} lg={1}>
+                            <div
                                 style={{
-                                    color: percentChange > 0 ? 'green' : 'red',
-                                    fontSize: '1.1em',
+                                    marginTop: 20,
+
+                                    height: '100%',
+                                    display: 'flex',
+                                    alignItems: 'center',
                                 }}
                             >
-                                {`${percentChange > 0 ? '+' : ''}${percentChange}%`}
-                            </Typography>
-                        </div>
-                    </Col>
-                </Row>
-            </Container>
+                                <Typography
+                                    style={{
+                                        fontSize: '1.1em',
+                                    }}
+                                >
+                                    {`$${endPrice}`}
+                                </Typography>
+                            </div>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col xs={8} sm={5} md={4} lg={3}>
+                            <div
+                                style={{
+                                    marginTop: 20,
+
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                <Typography
+                                    style={{
+                                        fontSize: '1.1em',
+                                    }}
+                                >
+                                    {`Change over ${moment.duration(endDate - startDate).humanize()}:`}
+                                </Typography>
+                            </div>
+                        </Col>
+                        <Col xs={4} sm={3} md={2} lg={1}>
+                            <div
+                                style={{
+                                    marginTop: 20,
+
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                <Typography
+                                    style={{
+                                        color: percentChange > 0 ? 'green' : 'red',
+                                        fontSize: '1.1em',
+                                    }}
+                                >
+                                    {`${percentChange > 0 ? '+' : ''}${percentChange}%`}
+                                </Typography>
+                            </div>
+                        </Col>
+                    </Row>
+                </Container>
+            </div>
         );
     }
 }
